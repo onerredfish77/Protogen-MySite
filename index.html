@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Steve Hering — Senior UX Designer crafting human-centered digital experiences." />
-  <title>Steve Hering — UX Designer</title>
+  <meta name="description" content="Steve Hering — Senior Consultant, Experience Design at Slalom. Based in Columbus, Ohio. Helping hospital systems, insurance, and logistics organizations design better digital products." />
+  <title>Steve Hering — Senior Consultant, Experience Design</title>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -1270,6 +1270,414 @@
       .weather-temp { font-size: 1.2rem; }
       .weather-location { display: none; }
     }
+
+    /* ============================================
+       EXPERIENCE / TIMELINE
+       ============================================ */
+    #experience {
+      padding: clamp(5rem, 10vw, 9rem) 0;
+      position: relative;
+    }
+
+    .experience-header {
+      max-width: 720px;
+      margin-bottom: 4rem;
+    }
+
+    .experience-header p {
+      color: var(--muted);
+      font-size: 1.0625rem;
+      line-height: 1.75;
+      margin-top: 1rem;
+    }
+
+    .timeline {
+      position: relative;
+      max-width: 820px;
+      margin: 0 auto;
+      padding-left: 1.75rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 8px;
+      bottom: 8px;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--accent) 0%, var(--subtle) 100%);
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-bottom: 2.5rem;
+    }
+
+    .timeline-item:last-child { padding-bottom: 0; }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -1.75rem;
+      top: 0.4rem;
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 2px solid var(--subtle);
+      transition: all var(--transition);
+    }
+
+    .timeline-item.current::before {
+      border-color: var(--accent);
+      background: var(--accent);
+      box-shadow: 0 0 0 4px var(--accent-glow);
+    }
+
+    .timeline-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.5rem 1rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+    }
+
+    .timeline-meta .dates { color: var(--accent); font-weight: 600; }
+
+    .timeline-role {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      line-height: 1.3;
+      color: var(--text);
+      margin-bottom: 0.15rem;
+    }
+
+    .timeline-company {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.6rem;
+    }
+
+    .timeline-company .accent { color: var(--accent); }
+
+    .timeline-desc {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 620px;
+    }
+
+    .timeline-sub {
+      margin-top: 1rem;
+      padding-left: 1rem;
+      border-left: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+
+    .timeline-sub-item .sub-role {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .timeline-sub-item .sub-dates {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-left: 0.5rem;
+    }
+
+    /* ============================================
+       ARTWORK GALLERY (horizontal scroll)
+       ============================================ */
+    #artwork {
+      padding: clamp(5rem, 10vw, 9rem) 0 clamp(4rem, 8vw, 7rem);
+      background: var(--surface);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #artwork::before,
+    #artwork::after {
+      content: '';
+      position: absolute;
+      inset-inline: 0;
+      height: 1px;
+      background: var(--border);
+    }
+    #artwork::before { top: -1px; }
+    #artwork::after  { bottom: -1px; }
+
+    .artwork-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+
+    .artwork-header p {
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 460px;
+      line-height: 1.7;
+    }
+
+    .artwork-scroll-hint {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .artwork-scroll-hint::after {
+      content: '→';
+      animation: artScrollNudge 1.8s ease-in-out infinite;
+    }
+
+    @keyframes artScrollNudge {
+      0%, 100% { transform: translateX(0); }
+      50%       { transform: translateX(6px); }
+    }
+
+    .artwork-track-wrap {
+      position: relative;
+      width: 100vw;
+      margin-left: calc(50% - 50vw);
+      margin-right: calc(50% - 50vw);
+    }
+
+    /* Padding equals the gutter outside the 1120px container,
+       so the first card aligns with the section header on wide screens. */
+    .artwork-track {
+      --art-edge: max(
+        calc((100vw - var(--max-w)) / 2),
+        clamp(1.25rem, 5vw, 2.5rem)
+      );
+      display: flex;
+      gap: 1.5rem;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      padding: 0.5rem var(--art-edge) 1.5rem;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: var(--accent) transparent;
+    }
+
+    .artwork-track::-webkit-scrollbar { height: 8px; }
+    .artwork-track::-webkit-scrollbar-track { background: transparent; }
+    .artwork-track::-webkit-scrollbar-thumb {
+      background: var(--subtle);
+      border-radius: 4px;
+    }
+    .artwork-track::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+    .art-card {
+      flex: 0 0 auto;
+      width: clamp(260px, 32vw, 380px);
+      scroll-snap-align: start;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+      display: flex;
+      flex-direction: column;
+      cursor: zoom-in;
+      text-align: left;
+      font: inherit;
+      color: inherit;
+      padding: 0;
+      appearance: none;
+    }
+
+    .art-card:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 4px;
+    }
+
+    .art-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+    }
+
+    .art-thumb {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      overflow: hidden;
+      background: var(--surface-2);
+    }
+
+    .art-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .art-card:hover .art-thumb img { transform: scale(1.04); }
+
+    .art-info {
+      padding: 1.1rem 1.25rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .art-info h3 {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.2;
+    }
+
+    .art-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+      font-size: 0.8125rem;
+      color: var(--muted);
+    }
+
+    .art-meta .medium {
+      color: var(--accent);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    @media (max-width: 640px) {
+      .art-card { width: 78vw; }
+      .artwork-header { margin-bottom: 2rem; }
+    }
+
+    /* ============================================
+       ARTWORK LIGHTBOX MODAL
+       ============================================ */
+    .art-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(1rem, 4vw, 3rem);
+      background: rgba(0, 0, 0, 0.88);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .art-modal.is-open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .art-modal-inner {
+      position: relative;
+      max-width: min(1200px, 100%);
+      max-height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      transform: scale(0.97);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .art-modal.is-open .art-modal-inner { transform: scale(1); }
+
+    .art-modal-img {
+      max-width: 100%;
+      max-height: calc(100vh - 10rem);
+      object-fit: contain;
+      border-radius: var(--radius);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7);
+      background: var(--surface-2);
+    }
+
+    .art-modal-caption {
+      color: var(--text);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .art-modal-caption .title {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .art-modal-caption .meta {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .art-modal-caption .meta .medium {
+      color: var(--accent);
+      font-weight: 600;
+      margin-right: 0.5rem;
+    }
+
+    .art-modal-close {
+      position: absolute;
+      top: -3rem;
+      right: 0;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font-size: 1.5rem;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background var(--transition), border-color var(--transition), transform var(--transition);
+    }
+
+    .art-modal-close:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      transform: rotate(90deg);
+    }
+
+    .art-modal-close:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    body.modal-open { overflow: hidden; }
+
+    @media (max-width: 640px) {
+      .art-modal-close { top: auto; bottom: -3.5rem; right: 50%; transform: translateX(50%); }
+      .art-modal-close:hover { transform: translateX(50%) rotate(90deg); }
+    }
   </style>
 </head>
 <body>
@@ -1284,8 +1692,9 @@
       <ul class="nav-links" id="nav-links">
         <li><a href="#about">About</a></li>
         <li><a href="#skills">Expertise</a></li>
-        <li><a href="#process">Process</a></li>
-        <li><a href="#work">Work</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#work">Engage</a></li>
+        <li><a href="#artwork">Artwork</a></li>
         <li><a href="#contact" class="nav-cta">Let's Talk ↗</a></li>
       </ul>
 
@@ -1306,7 +1715,7 @@
 
         <p class="hero-eyebrow">
           <span class="dot"></span>
-          Available for new opportunities
+          Senior Consultant, Experience Design · Slalom
         </p>
 
         <h1 class="hero-title">
@@ -1318,8 +1727,11 @@
         </h1>
 
         <p class="hero-subtitle">
-          Hi, I'm <strong>Steve</strong> — a User Experience Designer who turns
-          complex problems into clear, elegant, and delightful digital products.
+          Hi, I'm <strong>Steve</strong> — a Senior Experience Design Consultant working
+          at the intersection of business, design, and technology. I partner with
+          hospital systems, health insurance, and logistics organizations to
+          illuminate new paths through complex challenges — with clarity,
+          momentum, and outcomes that make a real difference.
         </p>
 
         <div class="hero-actions">
@@ -1371,18 +1783,18 @@
 
           <!-- Floating accent cards -->
           <div class="about-card about-card-top">
-            <div class="icon-badge">✦</div>
+            <div class="icon-badge">✨</div>
             <div class="card-text">
-              <strong>8+ Years</strong>
-              <span>UX Experience</span>
+              <strong>Slalom</strong>
+              <span>Senior Consultant, XD</span>
             </div>
           </div>
 
           <div class="about-card about-card-bot">
             <div class="tag-row">
-              <span class="tag active">Figma</span>
-              <span class="tag active">Research</span>
-              <span class="tag">Design Systems</span>
+              <span class="tag active">Journey Mapping</span>
+              <span class="tag active">Empathy Mapping</span>
+              <span class="tag">Usability Testing</span>
             </div>
           </div>
         </div>
@@ -1391,31 +1803,36 @@
         <div class="about-content">
           <span class="section-label reveal">About Me</span>
           <h2 class="section-title reveal reveal-delay-1">
-            Making the <em>complex</em><br>feel effortless.
+            Clarity, momentum,<br><em>outcomes.</em>
           </h2>
 
           <p class="about-text reveal reveal-delay-2">
-            I'm a User Experience Designer with a passion for understanding people and building
-            products they genuinely love. I combine research, strategy, and
-            craft to bridge the gap between business goals and human needs.
+            Hello! I'm Steve Hering and I live in the Columbus, Ohio area with my
+            wife and our two boys. By day I'm a Senior Consultant, Experience
+            Design at <strong>Slalom</strong> — partnering with hospital systems,
+            health insurance companies, and logistics organizations to illuminate
+            new paths to solving their toughest challenges.
           </p>
           <p class="about-text reveal reveal-delay-3">
-            Whether it's architecting an information system from scratch or
-            refining a single interaction, I bring curiosity, empathy, and
-            data-informed thinking to every decision.
+            My work sits at the intersection of business, design, and technology —
+            leading discovery, journey and empathy mapping, product strategy, and
+            translating ambiguity into experiences teams can actually deliver.
+            Outside of work you'll find me with my family, playing board games,
+            drawing, and thinking about how to spend just a little more time
+            cooking.
           </p>
 
           <div class="about-stats reveal reveal-delay-4">
             <div class="stat-item">
-              <strong>8<span>+</span></strong>
-              <p>Years designing</p>
+              <strong>14<span>+</span></strong>
+              <p>Years in UX</p>
             </div>
             <div class="stat-item">
-              <strong>40<span>+</span></strong>
-              <p>Products shipped</p>
+              <strong>4<span>+</span></strong>
+              <p>Years at Slalom</p>
             </div>
             <div class="stat-item">
-              <strong>12<span>+</span></strong>
+              <strong>3<span>+</span></strong>
               <p>Industries served</p>
             </div>
           </div>
@@ -1439,48 +1856,48 @@
           </h2>
         </div>
         <p class="reveal reveal-delay-2">
-          From generative research to pixel-perfect prototypes, I work
-          across the full UX spectrum — always anchored in evidence and
-          built to scale.
+          From discovery and product strategy to scalable design systems —
+          I help teams move from ambiguity to clarity, and from clarity to
+          shipped, measurable outcomes.
         </p>
       </div>
 
       <div class="skills-grid">
 
         <div class="skill-card reveal">
-          <div class="skill-icon">🔍</div>
-          <h3>User Research</h3>
-          <p>Usability tests, contextual inquiry, surveys, and synthesis frameworks that transform raw data into actionable insight.</p>
+          <div class="skill-icon">�️</div>
+          <h3>Journey &amp; Empathy Mapping</h3>
+          <p>Mapping end-to-end user journeys and emotional context so teams see the experience the way real people live it.</p>
         </div>
 
         <div class="skill-card reveal reveal-delay-1">
-          <div class="skill-icon">🗺️</div>
-          <h3>Information Architecture</h3>
-          <p>Card sorting, tree testing, and site mapping to build intuitive navigation and wayfinding systems users never have to think about.</p>
+          <div class="skill-icon">🔍</div>
+          <h3>Discovery &amp; Research</h3>
+          <p>Stakeholder interviews, usability testing, and synthesis that surface the real problem before a single pixel is pushed.</p>
         </div>
 
         <div class="skill-card reveal reveal-delay-2">
-          <div class="skill-icon">⚡</div>
-          <h3>Interaction Design</h3>
-          <p>Wireframes, flows, and high-fidelity prototypes that communicate behaviour clearly to both stakeholders and engineers.</p>
+          <div class="skill-icon">🧭</div>
+          <h3>Product Strategy</h3>
+          <p>Aligning business goals, user needs, and technical reality into a roadmap teams can rally around and ship.</p>
         </div>
 
         <div class="skill-card reveal reveal-delay-3">
-          <div class="skill-icon">🎨</div>
-          <h3>Visual Design</h3>
-          <p>Accessible, brand-consistent interfaces with a refined eye for typography, colour, spacing, and motion.</p>
+          <div class="skill-icon">⚡</div>
+          <h3>Interaction &amp; UI Design</h3>
+          <p>Sitemaps, user flows, wireframes, and high-fidelity visual designs that communicate intent clearly to stakeholders and engineers.</p>
         </div>
 
         <div class="skill-card reveal reveal-delay-4">
           <div class="skill-icon">⚙️</div>
           <h3>Design Systems</h3>
-          <p>Scalable component libraries in Figma with clear documentation, governance, and adoption strategies for product teams.</p>
+          <p>Scalable Figma component libraries with documentation, governance, and adoption strategies for product teams.</p>
         </div>
 
         <div class="skill-card reveal reveal-delay-5">
-          <div class="skill-icon">📊</div>
-          <h3>UX Strategy</h3>
-          <p>Roadmaps, OKR alignment, and design critiques that connect UX investments directly to business outcomes and user value.</p>
+          <div class="skill-icon">🤝</div>
+          <h3>Consulting &amp; Facilitation</h3>
+          <p>Workshops, working sessions, and design critiques that turn cross-functional friction into shared direction.</p>
         </div>
 
       </div>
@@ -1539,6 +1956,94 @@
   </section>
 
   <!-- =============================================
+       EXPERIENCE / CAREER TIMELINE
+       ============================================= -->
+  <section id="experience">
+    <div class="container">
+
+      <div class="experience-header">
+        <span class="section-label reveal">Experience</span>
+        <h2 class="section-title reveal reveal-delay-1">Where I've <em>worked.</em></h2>
+        <p class="reveal reveal-delay-2">
+          A career spanning hospital systems, health insurance, logistics,
+          and enterprise marketing — from web design through senior UX
+          leadership and consulting.
+        </p>
+      </div>
+
+      <div class="timeline">
+
+        <div class="timeline-item current reveal">
+          <div class="timeline-meta">
+            <span class="dates">Feb 2022 — Present</span>
+            <span>Columbus, OH</span>
+          </div>
+          <div class="timeline-role">Senior Consultant, Experience Design</div>
+          <div class="timeline-company"><span class="accent">Slalom</span> · Full-time</div>
+          <p class="timeline-desc">
+            Partnering with a diverse range of clients — healthcare, logistics,
+            and insurance — to address complex business and end-user challenges.
+            Leading discovery, journey and empathy mapping, and strategy work
+            that turns ambiguity into outcomes teams can actually deliver.
+          </p>
+        </div>
+
+        <div class="timeline-item reveal reveal-delay-1">
+          <div class="timeline-meta">
+            <span class="dates">Aug 2012 — Feb 2022 · 9 yrs 7 mos</span>
+            <span>Columbus, OH</span>
+          </div>
+          <div class="timeline-role">User Experience Design Leadership</div>
+          <div class="timeline-company"><span class="accent">Cardinal Health</span></div>
+          <p class="timeline-desc">
+            Led user experience efforts for the Enterprise Marketing team —
+            developing and presenting sitemaps, user flows, wireframes, and
+            visual designs for international and U.S. audiences.
+          </p>
+          <div class="timeline-sub">
+            <div class="timeline-sub-item">
+              <span class="sub-role">Manager, User Experience Design</span>
+              <span class="sub-dates">Oct 2017 — Feb 2022</span>
+            </div>
+            <div class="timeline-sub-item">
+              <span class="sub-role">Supervisor, User Experience Design</span>
+              <span class="sub-dates">Aug 2012 — Oct 2017</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item reveal reveal-delay-2">
+          <div class="timeline-meta">
+            <span class="dates">Jun 2010 — Aug 2012 · 2 yrs 3 mos</span>
+            <span>Greater Indianapolis</span>
+          </div>
+          <div class="timeline-role">Senior Web Designer</div>
+          <div class="timeline-company"><span class="accent">xiik Interactive Marketing</span></div>
+          <p class="timeline-desc">
+            Senior web design role focused on usability testing and user
+            interface design across a range of agency client engagements.
+          </p>
+        </div>
+
+        <div class="timeline-item reveal reveal-delay-3">
+          <div class="timeline-meta">
+            <span class="dates">May 2008 — Jun 2010 · 2 yrs 2 mos</span>
+            <span>Indianapolis, IN</span>
+          </div>
+          <div class="timeline-role">Web Designer</div>
+          <div class="timeline-company"><span class="accent">Clarian Health Partners</span></div>
+          <p class="timeline-desc">
+            First professional design role in healthcare — setting the
+            foundation for a career spent helping complex organizations
+            communicate clearly with the people they serve.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
        WORK / PORTFOLIO
        ============================================= -->
   <section id="work">
@@ -1546,66 +2051,211 @@
 
       <div class="work-header">
         <div>
-          <span class="section-label reveal">Portfolio</span>
-          <h2 class="section-title reveal reveal-delay-1">Selected <em>Work</em></h2>
+          <span class="section-label reveal">How I Engage</span>
+          <h2 class="section-title reveal reveal-delay-1">Ways I <em>can help.</em></h2>
         </div>
         <p class="reveal reveal-delay-2">
-          A curated selection of projects spanning enterprise SaaS,
-          consumer apps, and design systems.
+          Most of my client work is under NDA — here are the types of
+          engagements I lead day-to-day. Full case studies available on
+          request.
         </p>
       </div>
 
       <div class="work-grid">
 
-        <!-- Featured project -->
+        <!-- Featured engagement -->
         <div class="work-card reveal">
           <div class="work-thumb">
-            <div class="thumb-inner">🏥</div>
+            <div class="thumb-inner">🧭</div>
           </div>
           <div class="work-info">
             <div class="work-tags">
-              <span class="work-tag ux">UX Design</span>
+              <span class="work-tag ux">Discovery</span>
               <span class="work-tag research">Research</span>
-              <span class="work-tag system">Design System</span>
+              <span class="work-tag system">Strategy</span>
             </div>
-            <h3>Healthcare Patient Portal Redesign</h3>
-            <p>End-to-end redesign of a patient-facing health portal serving 2M+ users. Research-led IA overhaul reduced task-completion time by 38% and improved CSAT from 3.1 → 4.6.</p>
+            <h3>Product Discovery &amp; Strategy</h3>
+            <p>Leading discovery sprints that align stakeholders, surface real user needs, and translate ambiguity into a clear product direction — the kind teams can actually act on.</p>
           </div>
         </div>
 
-        <!-- Project 2 -->
+        <!-- Engagement 2 -->
         <div class="work-card reveal reveal-delay-1">
           <div class="work-thumb">
-            <div class="thumb-inner">💼</div>
-          </div>
-          <div class="work-info">
-            <div class="work-tags">
-              <span class="work-tag ux">UX Design</span>
-              <span class="work-tag mobile">Mobile</span>
-            </div>
-            <h3>B2B SaaS Onboarding Flow</h3>
-            <p>Redesigned multi-step onboarding cutting time-to-value from 14 days to 3, and increasing 30-day retention by 22%.</p>
-          </div>
-        </div>
-
-        <!-- Project 3 -->
-        <div class="work-card reveal reveal-delay-2">
-          <div class="work-thumb">
-            <div class="thumb-inner">🎨</div>
+            <div class="thumb-inner">⚙️</div>
           </div>
           <div class="work-info">
             <div class="work-tags">
               <span class="work-tag system">Design System</span>
-              <span class="work-tag design">Visual Design</span>
+              <span class="work-tag design">Governance</span>
             </div>
-            <h3>Enterprise Design System</h3>
-            <p>Built a 200+ component Figma library with full accessibility documentation, adopted by 6 product teams across 3 platforms.</p>
+            <h3>Scalable Design Systems</h3>
+            <p>Building and rolling out Figma-based component libraries with documentation, governance, and the adoption playbook to make them stick across multiple product teams.</p>
+          </div>
+        </div>
+
+        <!-- Engagement 3 -->
+        <div class="work-card reveal reveal-delay-2">
+          <div class="work-thumb">
+            <div class="thumb-inner">🚀</div>
+          </div>
+          <div class="work-info">
+            <div class="work-tags">
+              <span class="work-tag ux">UX Design</span>
+              <span class="work-tag mobile">End-to-End</span>
+            </div>
+            <h3>End-to-End Product Design</h3>
+            <p>Partnering with product and engineering from concept through launch — IA, flows, prototypes, and hand-off — keeping clarity and momentum at every step.</p>
           </div>
         </div>
 
       </div>
     </div>
   </section>
+
+  <!-- =============================================
+       ARTWORK GALLERY
+       ============================================= -->
+  <section id="artwork">
+    <div class="container">
+
+      <div class="artwork-header">
+        <div>
+          <span class="section-label reveal">Beyond the Pixels</span>
+          <h2 class="section-title reveal reveal-delay-1">A little <em>artwork.</em></h2>
+        </div>
+        <div class="reveal reveal-delay-2">
+          <p>
+            When I'm not designing digital products, I'm often at the
+            drawing table. A few selected pieces — see more at
+            <a href="https://www.stevehering.com/" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">stevehering.com</a>.
+          </p>
+          <span class="artwork-scroll-hint">Scroll to explore</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="artwork-track-wrap">
+      <div class="artwork-track" id="artwork-track">
+
+        <button type="button" class="art-card reveal"
+          data-art-full="https://www.stevehering.com/wp-content/uploads/2023/02/portfolio-artwork-mom-full.jpg"
+          data-art-title="Mom"
+          data-art-medium="Graphite on paper"
+          data-art-dimensions="15.75 × 22.5 inches">
+          <div class="art-thumb">
+            <img
+              src="https://www.stevehering.com/wp-content/uploads/2023/02/portfolio-artwork-mom-full.jpg"
+              alt="Mom — graphite portrait drawing by Steve Hering"
+              loading="lazy" />
+          </div>
+          <div class="art-info">
+            <h3>Mom</h3>
+            <div class="art-meta">
+              <span class="medium">Graphite on paper</span>
+              <span>15.75 × 22.5 inches</span>
+            </div>
+          </div>
+        </button>
+
+        <button type="button" class="art-card reveal reveal-delay-1"
+          data-art-full="https://www.stevehering.com/wp-content/uploads/2023/02/portfolio-artwork-tom-full-2-scaled-1.jpg"
+          data-art-title="Tom"
+          data-art-medium="Graphite on paper"
+          data-art-dimensions="15.75 × 22.5 inches">
+          <div class="art-thumb">
+            <img
+              src="https://www.stevehering.com/wp-content/uploads/2023/02/portfolio-artwork-tom-full-2-scaled-1.jpg"
+              alt="Tom — graphite portrait drawing by Steve Hering"
+              loading="lazy" />
+          </div>
+          <div class="art-info">
+            <h3>Tom</h3>
+            <div class="art-meta">
+              <span class="medium">Graphite on paper</span>
+              <span>15.75 × 22.5 inches</span>
+            </div>
+          </div>
+        </button>
+
+        <button type="button" class="art-card reveal reveal-delay-2"
+          data-art-full="https://www.stevehering.com/wp-content/uploads/2021/09/portfolio-artwork-hands-full-arttheme-standard-thumb-big-2000x1200.jpg"
+          data-art-title="Hands"
+          data-art-medium="Graphite on paper"
+          data-art-dimensions="23 × 14.5 inches">
+          <div class="art-thumb">
+            <img
+              src="https://www.stevehering.com/wp-content/uploads/2021/09/portfolio-artwork-hands-full-arttheme-standard-thumb-big-2000x1200.jpg"
+              alt="Hands — graphite drawing by Steve Hering"
+              loading="lazy" />
+          </div>
+          <div class="art-info">
+            <h3>Hands</h3>
+            <div class="art-meta">
+              <span class="medium">Graphite on paper</span>
+              <span>23 × 14.5 inches</span>
+            </div>
+          </div>
+        </button>
+
+        <button type="button" class="art-card reveal reveal-delay-3"
+          data-art-full="https://www.stevehering.com/wp-content/uploads/2021/12/portfolio-artwork-lucy-full.jpg"
+          data-art-title="Lucy"
+          data-art-medium="Pastel pencil on paper"
+          data-art-dimensions="9 × 12 inches">
+          <div class="art-thumb">
+            <img
+              src="https://www.stevehering.com/wp-content/uploads/2021/12/portfolio-artwork-lucy-full.jpg"
+              alt="Lucy — pastel pencil drawing by Steve Hering"
+              loading="lazy" />
+          </div>
+          <div class="art-info">
+            <h3>Lucy</h3>
+            <div class="art-meta">
+              <span class="medium">Pastel pencil on paper</span>
+              <span>9 × 12 inches</span>
+            </div>
+          </div>
+        </button>
+
+        <button type="button" class="art-card reveal reveal-delay-3"
+          data-art-full="https://www.stevehering.com/wp-content/uploads/2021/09/portfolio-artwork-drummajor-full.jpg"
+          data-art-title="Drum Major"
+          data-art-medium="Graphite on paper"
+          data-art-dimensions="">
+          <div class="art-thumb">
+            <img
+              src="https://www.stevehering.com/wp-content/uploads/2021/09/portfolio-artwork-drummajor-full.jpg"
+              alt="Drum Major — graphite drawing by Steve Hering"
+              loading="lazy" />
+          </div>
+          <div class="art-info">
+            <h3>Drum Major</h3>
+            <div class="art-meta">
+              <span class="medium">Graphite on paper</span>
+            </div>
+          </div>
+        </button>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Artwork Lightbox Modal -->
+  <div class="art-modal" id="art-modal" role="dialog" aria-modal="true" aria-labelledby="art-modal-title" aria-hidden="true">
+    <div class="art-modal-inner">
+      <button type="button" class="art-modal-close" id="art-modal-close" aria-label="Close">×</button>
+      <img class="art-modal-img" id="art-modal-img" src="" alt="" />
+      <div class="art-modal-caption">
+        <span class="title" id="art-modal-title"></span>
+        <span class="meta">
+          <span class="medium" id="art-modal-medium"></span>
+          <span id="art-modal-dimensions"></span>
+        </span>
+      </div>
+    </div>
+  </div>
 
   <!-- =============================================
        CONTACT
@@ -1619,22 +2269,23 @@
           Got a project in<br><em>mind?</em>
         </h2>
         <p class="reveal reveal-delay-2">
-          Whether you're looking for a design partner, a UX audit, or just want
-          to geek out about human-centered design — I'd love to hear from you.
+          Whether you'd like to discuss an engagement, talk shop about
+          human-centered design, or just say hi — I'd love to hear from
+          you. The easiest way to reach me is on LinkedIn.
         </p>
 
         <div class="contact-links reveal reveal-delay-3">
-          <a href="mailto:steve@example.com" class="contact-link email-link">
-            <span class="link-icon">✉</span>
-            Send an Email
-          </a>
-          <a href="https://linkedin.com/in/stevehering" target="_blank" rel="noopener noreferrer" class="contact-link">
+          <a href="https://www.linkedin.com/in/stevehering/" target="_blank" rel="noopener noreferrer" class="contact-link email-link">
             <span class="link-icon">in</span>
-            LinkedIn
+            Connect on LinkedIn
           </a>
-          <a href="https://dribbble.com/stevehering" target="_blank" rel="noopener noreferrer" class="contact-link">
-            <span class="link-icon">◔</span>
-            Dribbble
+          <a href="https://www.stevehering.com/" target="_blank" rel="noopener noreferrer" class="contact-link">
+            <span class="link-icon">◈</span>
+            stevehering.com
+          </a>
+          <a href="https://www.stevehering.com/about/" target="_blank" rel="noopener noreferrer" class="contact-link">
+            <span class="link-icon">✨</span>
+            More About Me
           </a>
         </div>
 
@@ -1647,10 +2298,10 @@
        ============================================= -->
   <footer>
     <div class="container footer-inner">
-      <p>© 2026 <a href="#hero">Steve Hering</a>. Designed &amp; built with care.</p>
+      <p>© 2026 <a href="#hero">Steve Hering</a> · Ohio Wesleyan University · Columbus, OH</p>
       <nav class="footer-links" aria-label="Footer navigation">
-        <a href="#about">About</a>
-        <a href="#work">Work</a>
+        <a href="https://www.stevehering.com/" target="_blank" rel="noopener noreferrer">stevehering.com</a>
+        <a href="https://www.linkedin.com/in/stevehering/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
         <a href="#contact">Contact</a>
       </nav>
     </div>
@@ -1829,6 +2480,53 @@
         () => fallbackToIP(),
         { timeout: 8000, maximumAge: 10 * 60 * 1000 }
       );
+    })();
+
+    /* ============================================
+       ARTWORK LIGHTBOX
+       ============================================ */
+    (function initArtModal() {
+      const modal = document.getElementById('art-modal');
+      if (!modal) return;
+      const modalImg = document.getElementById('art-modal-img');
+      const modalTitle = document.getElementById('art-modal-title');
+      const modalMedium = document.getElementById('art-modal-medium');
+      const modalDims = document.getElementById('art-modal-dimensions');
+      const closeBtn = document.getElementById('art-modal-close');
+      let lastFocused = null;
+
+      function openModal(card) {
+        lastFocused = card;
+        modalImg.src = card.dataset.artFull;
+        modalImg.alt = card.dataset.artTitle + ' — ' + card.dataset.artMedium;
+        modalTitle.textContent = card.dataset.artTitle;
+        modalMedium.textContent = card.dataset.artMedium;
+        modalDims.textContent = card.dataset.artDimensions;
+        modal.classList.add('is-open');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('modal-open');
+        closeBtn.focus();
+      }
+
+      function closeModal() {
+        modal.classList.remove('is-open');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('modal-open');
+        modalImg.src = '';
+        if (lastFocused) lastFocused.focus();
+      }
+
+      document.querySelectorAll('.art-card').forEach((card) => {
+        card.addEventListener('click', () => openModal(card));
+      });
+
+      closeBtn.addEventListener('click', closeModal);
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
+      });
     })();
   </script>
 
