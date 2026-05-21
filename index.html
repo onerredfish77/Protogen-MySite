@@ -1173,7 +1173,7 @@
       bottom: 1.5rem;
       right: 1.5rem;
       z-index: 90;
-      min-width: 200px;
+      min-width: 240px;
       background: rgba(28, 28, 28, 0.75);
       border: 1px solid var(--border);
       border-radius: var(--radius);
@@ -1197,14 +1197,31 @@
       border-color: var(--accent);
     }
 
-    .weather-row {
+    .weather-day {
       display: flex;
       align-items: center;
       gap: 0.85rem;
+      padding: 0.35rem 0;
+    }
+
+    .weather-day + .weather-day {
+      border-top: 1px solid var(--border);
+      margin-top: 0.35rem;
+      padding-top: 0.7rem;
+    }
+
+    .weather-day-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      width: 58px;
+      flex-shrink: 0;
     }
 
     .weather-emoji {
-      font-size: 2rem;
+      font-size: 1.8rem;
       line-height: 1;
       filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));
     }
@@ -1212,13 +1229,14 @@
     .weather-info {
       display: flex;
       flex-direction: column;
-      gap: 0.15rem;
+      gap: 0.1rem;
       min-width: 0;
+      flex: 1;
     }
 
     .weather-temp {
       font-family: var(--font-display);
-      font-size: 1.5rem;
+      font-size: 1.35rem;
       font-weight: 700;
       line-height: 1;
       color: var(--text);
@@ -1226,13 +1244,23 @@
 
     .weather-temp span {
       color: var(--accent);
-      font-size: 0.95rem;
+      font-size: 0.85rem;
       margin-left: 0.15rem;
       vertical-align: top;
     }
 
+    .weather-hilo {
+      font-size: 0.78rem;
+      color: var(--text);
+      letter-spacing: 0.02em;
+    }
+
+    .weather-hilo .hi { color: var(--text); font-weight: 600; }
+    .weather-hilo .lo { color: var(--muted); }
+    .weather-hilo .sep { color: var(--muted); margin: 0 0.25rem; }
+
     .weather-desc {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       color: var(--muted);
       letter-spacing: 0.04em;
     }
@@ -1241,7 +1269,7 @@
       margin-top: 0.6rem;
       padding-top: 0.6rem;
       border-top: 1px solid var(--border);
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--muted);
@@ -1264,10 +1292,11 @@
         bottom: 1rem;
         right: 1rem;
         min-width: 0;
-        padding: 0.7rem 0.9rem;
+        padding: 0.65rem 0.85rem;
       }
-      .weather-emoji { font-size: 1.6rem; }
-      .weather-temp { font-size: 1.2rem; }
+      .weather-emoji { font-size: 1.5rem; }
+      .weather-temp { font-size: 1.1rem; }
+      .weather-day-label { width: 48px; font-size: 0.6rem; }
       .weather-location { display: none; }
     }
 
@@ -2310,12 +2339,23 @@
   <!-- =============================================
        WEATHER WIDGET
        ============================================= -->
-  <aside id="weather-widget" aria-live="polite" aria-label="Current weather">
-    <div class="weather-row">
-      <div class="weather-emoji" id="weather-emoji">🌤️</div>
+  <aside id="weather-widget" aria-live="polite" aria-label="Two-day forecast">
+    <div class="weather-day">
+      <div class="weather-day-label">Today</div>
+      <div class="weather-emoji" id="wx-emoji-0">🌤️</div>
       <div class="weather-info">
-        <div class="weather-temp" id="weather-temp">--<span>°F</span></div>
-        <div class="weather-desc" id="weather-desc">Loading weather…</div>
+        <div class="weather-temp" id="wx-temp-0">--<span>°F</span></div>
+        <div class="weather-desc" id="wx-desc-0">Loading…</div>
+      </div>
+    </div>
+    <div class="weather-day">
+      <div class="weather-day-label">Tomorrow</div>
+      <div class="weather-emoji" id="wx-emoji-1">🌤️</div>
+      <div class="weather-info">
+        <div class="weather-hilo">
+          <span class="hi" id="wx-hi-1">--</span>°<span class="sep">/</span><span class="lo" id="wx-lo-1">--</span>°
+        </div>
+        <div class="weather-desc" id="wx-desc-1">--</div>
       </div>
     </div>
     <div class="weather-location" id="weather-location">Locating…</div>
@@ -2379,11 +2419,15 @@
 
     // --- Weather Widget (Open-Meteo + Geolocation w/ IP fallback) ---
     (function initWeather() {
-      const widget   = document.getElementById('weather-widget');
-      const elEmoji  = document.getElementById('weather-emoji');
-      const elTemp   = document.getElementById('weather-temp');
-      const elDesc   = document.getElementById('weather-desc');
-      const elLoc    = document.getElementById('weather-location');
+      const widget    = document.getElementById('weather-widget');
+      const elEmoji0  = document.getElementById('wx-emoji-0');
+      const elTemp0   = document.getElementById('wx-temp-0');
+      const elDesc0   = document.getElementById('wx-desc-0');
+      const elEmoji1  = document.getElementById('wx-emoji-1');
+      const elHi1     = document.getElementById('wx-hi-1');
+      const elLo1     = document.getElementById('wx-lo-1');
+      const elDesc1   = document.getElementById('wx-desc-1');
+      const elLoc     = document.getElementById('weather-location');
 
       // Open-Meteo WMO weather code → { emoji, label }
       function codeToWeather(code) {
@@ -2399,9 +2443,13 @@
       }
 
       function showError(msg) {
-        elEmoji.textContent = '🌐';
-        elTemp.innerHTML = '--<span>°F</span>';
-        elDesc.textContent = msg;
+        elEmoji0.textContent = '🌐';
+        elTemp0.innerHTML = '--<span>°F</span>';
+        elDesc0.textContent = msg;
+        elEmoji1.textContent = '🌐';
+        elHi1.textContent = '--';
+        elLo1.textContent = '--';
+        elDesc1.textContent = '—';
         elLoc.textContent = 'Unavailable';
         widget.classList.add('ready');
       }
@@ -2409,21 +2457,39 @@
       async function fetchWeather(lat, lon, label) {
         try {
           const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}`
-                    + `&current=temperature_2m,weather_code&temperature_unit=fahrenheit&timezone=auto`;
+                    + `&current=temperature_2m,weather_code`
+                    + `&daily=weather_code,temperature_2m_max,temperature_2m_min`
+                    + `&temperature_unit=fahrenheit&timezone=auto&forecast_days=2`;
           const res = await fetch(url);
           if (!res.ok) throw new Error('Weather request failed');
           const data = await res.json();
-          const c = data.current;
-          const w = codeToWeather(c.weather_code);
 
-          elEmoji.textContent = w.emoji;
-          elTemp.innerHTML = `${Math.round(c.temperature_2m)}<span>°F</span>`;
-          elDesc.textContent = w.label;
+          // --- Today (current temp + today's condition) ---
+          const cur = data.current;
+          const todayCode = data.daily.weather_code[0];
+          const wToday = codeToWeather(todayCode);
+          const todayHi = Math.round(data.daily.temperature_2m_max[0]);
+          const todayLo = Math.round(data.daily.temperature_2m_min[0]);
 
+          elEmoji0.textContent = wToday.emoji;
+          elTemp0.innerHTML = `${Math.round(cur.temperature_2m)}<span>°F</span>`;
+          elDesc0.textContent = `${wToday.label} · ${todayHi}° / ${todayLo}°`;
+
+          // --- Tomorrow (high/low + condition) ---
+          const tomorrowCode = data.daily.weather_code[1];
+          const wTomorrow = codeToWeather(tomorrowCode);
+          const tHi = Math.round(data.daily.temperature_2m_max[1]);
+          const tLo = Math.round(data.daily.temperature_2m_min[1]);
+
+          elEmoji1.textContent = wTomorrow.emoji;
+          elHi1.textContent = tHi;
+          elLo1.textContent = tLo;
+          elDesc1.textContent = wTomorrow.label;
+
+          // --- Location label ---
           if (label) {
             elLoc.textContent = label;
           } else {
-            // Reverse-geocode for a friendly city name (free, no key)
             try {
               const geoRes = await fetch(
                 `https://geocoding-api.open-meteo.com/v1/reverse?latitude=${lat}&longitude=${lon}&count=1&language=en&format=json`
