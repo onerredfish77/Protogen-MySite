@@ -1,0 +1,8 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "/^cp index\\.html index\\.html\\.bak && awk '\n  /\\^  <!-- Styles \\\\\\(Inlined\\\\\\) -->/ \\{ print \"  <!-- Styles -->\"; print \"  <link rel=\\\\\"stylesheet\\\\\" href=\\\\\"css/styles\\.css\\\\\" />\"; in_style=1; next \\}\n  /\\^  <style>/ && in_style \\{ next \\}\n  /\\^  <\\\\/style>/ && in_style \\{ in_style=0; next \\}\n  in_style \\{ next \\}\n  /\\^  <!-- =\\+\\$/ && getline next1 && next1 ~ /SCRIPTS \\\\\\(minimal vanilla JS\\\\\\)/ \\{\n    getline next2;  # consume closing ===== line\n    print \"  <!-- Scripts -->\";\n    print \"  <script src=\\\\\"app\\.js\\\\\" defer></script>\";\n    in_script=1; next\n  \\}\n  /\\^  <script>/ && in_script \\{ next \\}\n  /\\^  <\\\\/script>/ && in_script \\{ in_script=0; next \\}\n  in_script \\{ next \\}\n  \\{ print \\}\n' index\\.html\\.bak > index\\.html\\.new && mv index\\.html\\.new index\\.html && wc -l index\\.html && grep -n -E '<link\\|<script\\|<style' index\\.html \\| head -20$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    }
+}
